@@ -1,0 +1,32 @@
+$rootGroup  = "root"
+$root_group = "root"
+$root_user  = "root"
+
+filebucket {
+  "main":
+    server => "puppet.${domain}",
+}
+
+# global defaults
+File {
+  backup => 'main',
+  owner  => $root_user,
+  group  => $root_group,
+}
+
+Exec {
+  path => '/usr/bin:/usr/sbin/:/bin:/sbin:/usr/local/sbin:/usr/local/bin',
+}
+
+Service {
+  hasstatus => true,
+}
+
+# Audit-only purging of non-managed cron jobs
+resources { 'cron':
+  purge => true,
+  noop  => true,
+}
+
+hiera_include('classes', 'role::magic')
+import "nodes.pp"

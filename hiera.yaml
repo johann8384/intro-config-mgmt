@@ -1,0 +1,11 @@
+---
+:backends:
+  - json
+:json:
+  :datadir: /etc/puppet/environments/%{::environment}/hiera
+:merge_behavior: deeper
+:hierarchy:
+  - "node/%{::fqdn}"
+  - "osfamily/%{::osfamily}"
+  - "vendor/%{::vendor}"
+  - common
